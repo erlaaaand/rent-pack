@@ -21,7 +21,7 @@
     <div class="text-center mb-4">
         <h1 class="fw-bold">Tambah Alat Camping</h1>
     </div>
-    
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -79,6 +79,39 @@
 
         <button type="submit" class="btn btn-primary w-100 py-2">Tambah Alat</button>
     </form>
+
+    @if (session('success'))
+        <!-- Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Berhasil!</h5>
+                    </div>
+                    <div class="modal-body">
+                        {{ session('success') }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="successOkButton">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+
+                document.getElementById('successOkButton').addEventListener('click', function() {
+                    successModal.hide();
+                    // Redirect kalau mau
+                    window.location.href = "{{ route('alat-camping.index') }}";
+                    // atau bisa stay di halaman
+                });
+            });
+        </script>
+    @endif
 
 </div>
 

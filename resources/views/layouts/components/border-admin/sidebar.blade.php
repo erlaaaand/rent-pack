@@ -63,6 +63,11 @@
                                     <span class="sub-item">Daftar Alat</span>
                                 </a>
                             </li>
+                            <li class="{{ request()->routeIs('alat-camping.trashed') ? 'active' : '' }}">
+                                <a href="{{ route('alat-camping.trashed') }}">
+                                    <span class="sub-item">Data Terhapus</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -75,7 +80,8 @@
                         <p>Riwayat Peminjaman</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->routeIs('peminjaman.*') ? 'show' : '' }}" id="riwayatPeminjaman">
+                    <div class="collapse {{ request()->routeIs('peminjaman.*') ? 'show' : '' }}"
+                        id="riwayatPeminjaman">
                         <ul class="nav nav-collapse">
                             <li class="{{ request()->routeIs('peminjaman.riwayat') ? 'active' : '' }}">
                                 <a href="{{ route('peminjaman.riwayat') }}">
