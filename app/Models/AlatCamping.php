@@ -19,4 +19,9 @@ class AlatCamping extends Model
         'harga_sewa',
         'gambar',
     ];
+
+    public function setHargaSewaAttribute($value)
+    {
+        $this->attributes['harga_sewa'] = (int)preg_replace('/[^0-9]/', '', $value);
+    }
 }

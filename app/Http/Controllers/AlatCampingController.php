@@ -2,45 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\AlatCamping;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AlatCampingController extends Controller
 {
     public function store(Request $request)
     {
-        // Validasi input dari form
         $request->validate([
             'namaAlat' => 'required|string|max:255',
             'kategoriAlat' => 'required|string',
             'jumlahAlat' => 'required|integer|min:1',
             'hargaSewa' => 'required|string',
             'deskripsiAlat' => 'nullable|string',
-            'gambarAlat' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:25600',  // 25MB dalam byte
+            'gambarAlat' => 'required|image|mimes:jpeg,png,jpg,gif|max:5210',
         ]);
 
-        // Menghilangkan format 'Rp', titik, dan spasi dari harga sewa
-        $harga = (int) str_replace(['Rp', '.', ' '], '', $request->hargaSewa);
-
-        // Menyimpan gambar jika ada gambar yang di-upload
         $gambarPath = null;
         if ($request->hasFile('gambarAlat')) {
-            // Simpan gambar di folder 'public/storage/alat_camping' dan dapatkan path-nya
-            $gambarPath = $request->file('gambarAlat')->store('alat_camping', 'public');
+            $gambarPath = $request->file('gambarAlat')->store('images', 'public');
         }
 
-        // Menyimpan data alat camping ke database
         AlatCamping::create([
             'nama_alat' => $request->namaAlat,
             'kategori' => $request->kategoriAlat,
             'jumlah' => $request->jumlahAlat,
-            'harga_sewa' => $harga,
+            'harga_sewa' => $request->hargaSewa,
             'deskripsi' => $request->deskripsiAlat,
-            'gambar' => 'storage/' . $gambarPath,  // Menyimpan path relatif
+            'gambar' => $gambarPath,
         ]);
 
-        // Redirect kembali ke halaman dengan pesan sukses
-        return redirect()->route('alat-camping.create')->with('success', 'Data alat camping berhasil ditambahkan!');
+        return redirect()->back()->with('success', 'Data alat camping berhasil ditambahkan!');
     }
 
     public function show($id)
@@ -56,4 +49,12 @@ class AlatCampingController extends Controller
 
         return view('admin.alat-camping.views.daftar-alat', compact('alatCamping'));
     }
+
+    public function create()
+    {
+        return view('admin.alat-camping.views.tambah-alat');
+        // Sesuaikan view-nya ke tempat form tambah alat kamu.
+    }
+
+    public function edit($id) {}
 }

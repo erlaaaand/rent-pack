@@ -5,8 +5,9 @@ use App\Http\Controllers\AlatCampingController;
 
 // BACKEND
 Route::get('/alat-camping', [AlatCampingController::class, 'index'])->name('alat-camping.index');
-Route::post('/alat-camping', [AlatCampingController::class, 'create'])->name('alat-camping.create');
-Route::get('/alat-camping/{id}', [AlatCampingController::class, 'show'])->name('alat-camping.show');
+Route::post('/alat-camping', [AlatCampingController::class, 'store'])->name('alat-camping.store');
+Route::get('/alat-camping/{id}', [AlatCampingController::class, 'show'])->name('alatCamping.show');
+Route::get('/edit-alat-camping/{id}', [AlatCampingController::class, 'edit'])->name('alatCamping.edit');
 
 // INTERFACE ADMIN
 Route::prefix('admin')->group(function () {
@@ -16,8 +17,8 @@ Route::prefix('admin')->group(function () {
     // ALAT CAMPING
     Route::prefix('alat-camping')->group(function () {
         Route::view('/tambah', 'admin/alat-camping/views/tambah-alat')->name('alat-camping.create');
-        Route::view('/daftar', 'admin/alat-camping/views/daftar-alat')->name('alat-camping.list');
-        Route::view('/detail', 'admin/alat-camping/views/detail-alat')->name('alat-camping.detail');
+        Route::view('/daftar', 'admin/alat-camping/views/daftar-alat')->name('alat-amping.list');
+        Route::view('/detail', 'admin/alat-camping/views/detail-alat')->name('alat-amping.detail');
     });
 
     // PEMINJAMAN
