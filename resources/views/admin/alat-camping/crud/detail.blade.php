@@ -2,22 +2,31 @@
     <div class="row g-5">
         <!-- Gambar Alat -->
         <div class="col-md-6">
-            <img src="https://source.unsplash.com/800x500/?camping,gear" class="img-fluid rounded shadow-sm"
-                alt="Gambar Alat">
+            @if($alatCamping->gambar)  <!-- Cek apakah gambar ada -->
+                <img src="{{ asset('storage/' . $alatCamping->gambar) }}" class="img-fluid rounded shadow-sm" alt="Gambar Alat">
+            @else
+                <img src="https://source.unsplash.com/800x500/?camping,gear" class="img-fluid rounded shadow-sm" alt="Gambar Alat">
+            @endif
         </div>
 
         <!-- Detail Alat -->
         <div class="col-md-6">
-            <h2 id="namaAlatDisplay" class="fw-bold">Tenda Dome 4 Orang</h2>
-            <p id="deskripsiDisplay" class="text-muted">Tenda nyaman untuk 4 orang, tahan air dan cocok untuk semua musim.</p>
-            <p><strong>Jumlah Barang:</strong> <span id="jumlahBarang">4</span></p>
-            <p><strong>Kategori:</strong> <span id="kategoriDisplay">Tenda</span></p>
-            <p><strong>Harga Sewa:</strong> <span id="hargaDisplay">Rp100.000/hari</span></p>
+            @if($alatCamping)
+                <h2 id="namaAlatDisplay" class="fw-bold">{{ $alatCamping->nama_alat }}</h2>
+                <p id="deskripsiDisplay" class="text-muted">{{ $alatCamping->deskripsi }}</p>
+                <p><strong>Jumlah Barang:</strong> <span id="jumlahBarang">{{ $alatCamping->jumlah }}</span></p>
+                <p><strong>Kategori:</strong> <span id="kategoriDisplay">{{ ucfirst($alatCamping->kategori) }}</span></p>
+                <p><strong>Harga Sewa:</strong> <span id="hargaDisplay">{{ 'Rp' . number_format($alatCamping->harga_sewa, 0, ',', '.') . '/hari' }}</span></p>
 
-            <button id="editBtn" class="btn btn-outline-primary mt-3">Edit</button>
-            <button type="button" class="btn btn-primary mt-3" id="backBtn" onclick="history.back()">Back</button>
+                <button id="editBtn" class="btn btn-outline-primary mt-3" onclick="window.location.href='{{ route('alatCamping.edit', $alatCamping->id) }}'">Edit</button>
+                <button type="button" class="btn btn-primary mt-3" id="backBtn" onclick="history.back()">Back</button>
+            @else
+                <p class="text-muted">Data alat camping tidak tersedia.</p>
+                <button type="button" class="btn btn-primary mt-3" id="backBtn" onclick="history.back()">Back</button>
+            @endif
         </div>
     </div>
+</div>
 
     <!-- Form Edit (disembunyikan awalnya) -->
     <div id="formEdit" class="mt-5" style="display: none;">

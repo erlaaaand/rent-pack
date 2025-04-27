@@ -1,39 +1,42 @@
 <div class="container">
     <h1 class="mb-4 text-center fw-bold">Daftar Alat</h1>
     <div class="row" id="alatContainer">
-        <!-- Card Template (10 contoh, nanti ditampilkan per 3 per halaman) -->
-        <div class="col-md-4 mb-4 alat-item">
-            <div class="card alat-card shadow-sm">
-                <img src="https://source.unsplash.com/400x250/?tent,camping" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Tenda Dome</h5>
-                    <p class="card-text">Tenda untuk 4 orang, tahan air.</p>
-                    <p class="card-text"><strong>Harga:</strong> Rp100.000/hari</p>
+        @foreach ($alatCamping as $alat)
+            <div class="col-md-4 mb-4 alat-item">
+                <div class="card alat-card shadow-sm">
+                    @if ($alat->gambar)
+                        <img src="{{ asset('storage/' . $alat->gambar) }}" class="card-img-top" alt="Gambar Alat">
+                    @else
+                        <img src="https://source.unsplash.com/400x250/?camping,gear" class="card-img-top"
+                            alt="Default Image">
+                    @endif
 
-                    <div class="d-flex gap-2">
-                        <a href="{{ url('/alat/detail') }}" class="btn btn-outline-primary w-50">Detail</a>
-                        <button class="btn btn-danger w-50">Hapus</button>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $alat->nama_alat }}</h5>
+                        <p class="card-text">{{ $alat->deskripsi }}</p>
+                        <p class="card-text"><strong>Harga:</strong>
+                            Rp{{ number_format($alat->harga_sewa, 0, ',', '.') }}/hari</p>
+
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('alatCamping.show', $alat->id) }}"
+                                class="btn btn-outline-primary w-50">Detail</a>
+                            <button class="btn btn-danger w-50">Hapus</button>
+                        </div>
                     </div>
                 </div>
-
             </div>
-        </div>
-
-        <!-- Duplikat card sebanyak yang dibutuhkan (disamakan class: alat-item) -->
-        <!-- Tambahkan 9 dummy lagi untuk demo -->
-        <!-- Ulangi item di atas dengan gambar berbeda dan teks yang beda -->
-        <!-- Bisa copy-paste dan ubah teks sedikit untuk contoh -->
-        <!-- Untuk demo pagination, kita asumsikan ada 9-10 card -->
+        @endforeach
     </div>
+</div>
 
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        <nav>
-            <ul class="pagination" id="paginationContainer">
-                <!-- Will be generated via jQuery -->
-            </ul>
-        </nav>
-    </div>
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+    <nav>
+        <ul class="pagination" id="paginationContainer">
+            <!-- Will be generated via jQuery -->
+        </ul>
+    </nav>
+</div>
 </div>
 
 <!-- CSS -->

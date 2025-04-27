@@ -1,10 +1,9 @@
 <!-- Sidebar untuk Admin Pengelola Alat Camping -->
-<!-- Versi 6 -->
 <div class="sidebar" data-background-color="dark">
     <div class="sidebar-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-            <a href="{{ url('/admin') }}"
+            <a href="{{ route('admin.dashboard') }}"
                 class="logo d-flex align-items-center text-decoration-none px-3 py-2 text-white w-100"
                 style="max-width: 100%; overflow: hidden; transition: background-color 0.3s ease;">
                 <div class="d-flex align-items-center justify-content-center bg-white bg-opacity-10 rounded-circle flex-shrink-0 me-2"
@@ -31,23 +30,11 @@
             <ul class="nav nav-secondary">
 
                 <!-- Dashboard -->
-                <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#dashboard"
-                        aria-expanded="{{ request()->is('admin') ? 'true' : 'false' }}"
-                        class="{{ request()->is('admin') ? '' : 'collapsed' }}">
+                <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
-                        <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->is('admin') ? 'show' : '' }}" id="dashboard">
-                        <ul class="nav nav-collapse">
-                            <li class="{{ request()->is('admin') ? 'active' : '' }}">
-                                <a href="{{ url('/admin') }}">
-                                    <span class="sub-item">Ringkasan</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
                 <!-- Manajemen Alat -->
@@ -57,23 +44,22 @@
                 </li>
 
                 <!-- Alat Camping -->
-                <li class="nav-item {{ request()->is('alat') || request()->is('alat/*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#alat"
-                        class="{{ request()->is('alat') || request()->is('alat/*') ? '' : 'collapsed' }}">
+                <li class="nav-item {{ request()->routeIs('alat-camping.*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#alatCamping"
+                        class="{{ request()->routeIs('alat-camping.*') ? '' : 'collapsed' }}">
                         <i class="fas fa-compass"></i>
                         <p>Alat Camping</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->is('alat') || request()->is('alat/*') ? 'show' : '' }}"
-                        id="alat">
+                    <div class="collapse {{ request()->routeIs('alat-camping.*') ? 'show' : '' }}" id="alatCamping">
                         <ul class="nav nav-collapse">
-                            <li class="{{ request()->is('alat/tambah') ? 'active' : '' }}">
-                                <a href="{{ url('/alat/tambah') }}">
+                            <li class="{{ request()->routeIs('alat-camping.create') ? 'active' : '' }}">
+                                <a href="{{ route('alat-camping.create') }}">
                                     <span class="sub-item">Tambah Alat</span>
                                 </a>
                             </li>
-                            <li class="{{ request()->is('alat/daftar') ? 'active' : '' }}">
-                                <a href="{{ url('/alat/daftar') }}">
+                            <li class="{{ request()->routeIs('alat-camping.index') ? 'active' : '' }}">
+                                <a href="{{ route('alat-camping.index') }}">
                                     <span class="sub-item">Daftar Alat</span>
                                 </a>
                             </li>
@@ -82,45 +68,41 @@
                 </li>
 
                 <!-- Riwayat Peminjaman -->
-                <li
-                    class="nav-item {{ request()->is('peminjaman') || request()->is('peminjaman/*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('peminjaman.*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#riwayatPeminjaman"
-                        class="{{ request()->is('peminjaman') || request()->is('peminjaman/*') ? '' : 'collapsed' }}">
+                        class="{{ request()->routeIs('peminjaman.*') ? '' : 'collapsed' }}">
                         <i class="fas fa-history"></i>
                         <p>Riwayat Peminjaman</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->is('peminjaman') || request()->is('peminjaman/*') ? 'show' : '' }}"
-                        id="riwayatPeminjaman">
+                    <div class="collapse {{ request()->routeIs('peminjaman.*') ? 'show' : '' }}" id="riwayatPeminjaman">
                         <ul class="nav nav-collapse">
-                            <li class="{{ request()->is('peminjaman/riwayat') ? 'active' : '' }}">
-                                <a href="{{ url('/peminjaman/riwayat') }}">
+                            <li class="{{ request()->routeIs('peminjaman.riwayat') ? 'active' : '' }}">
+                                <a href="{{ route('peminjaman.riwayat') }}">
                                     <span class="sub-item">Daftar Riwayat</span>
                                 </a>
                             </li>
-                            <li class="{{ request()->is('peminjaman/belum-dikembalikan') ? 'active' : '' }}">
-                                <a href="{{ url('/peminjaman/belum-dikembalikan') }}">
-                                    <span class="sub-item">Daftar Riwayat Belum Dikembalikan</span>
+                            <li class="{{ request()->routeIs('peminjaman.belum-dikembalikan') ? 'active' : '' }}">
+                                <a href="{{ route('peminjaman.belum-dikembalikan') }}">
+                                    <span class="sub-item">Belum Dikembalikan</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-
                 <!-- Pengguna -->
-                <li class="nav-item {{ request()->is('pengguna') || request()->is('pengguna/*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('pengguna.*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#pengguna"
-                        class="{{ request()->is('pengguna') || request()->is('pengguna/*') ? '' : 'collapsed' }}">
+                        class="{{ request()->routeIs('pengguna.*') ? '' : 'collapsed' }}">
                         <i class="fas fa-users"></i>
                         <p>Pengguna</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->is('pengguna') || request()->is('pengguna/*') ? 'show' : '' }}"
-                        id="pengguna">
+                    <div class="collapse {{ request()->routeIs('pengguna.*') ? 'show' : '' }}" id="pengguna">
                         <ul class="nav nav-collapse">
-                            <li class="{{ request()->is('pengguna/list') ? 'active' : '' }}">
-                                <a href="{{ url('/pengguna/list') }}">
+                            <li class="{{ request()->routeIs('pengguna.list') ? 'active' : '' }}">
+                                <a href="{{ route('pengguna.list') }}">
                                     <span class="sub-item">Daftar Pengguna</span>
                                 </a>
                             </li>
@@ -129,23 +111,22 @@
                 </li>
 
                 <!-- Laporan -->
-                <li class="nav-item {{ request()->is('laporan') || request()->is('laporan/*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#laporan"
-                        class="{{ request()->is('laporan') || request()->is('laporan/*') ? '' : 'collapsed' }}">
+                        class="{{ request()->routeIs('laporan.*') ? '' : 'collapsed' }}">
                         <i class="fas fa-file-alt"></i>
                         <p>Laporan</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->is('laporan') || request()->is('laporan/*') ? 'show' : '' }}"
-                        id="laporan">
+                    <div class="collapse {{ request()->routeIs('laporan.*') ? 'show' : '' }}" id="laporan">
                         <ul class="nav nav-collapse">
-                            <li class="{{ request()->is('laporan/transaksi') ? 'active' : '' }}">
-                                <a href="{{ url('/laporan/transaksi') }}">
+                            <li class="{{ request()->routeIs('laporan.transaksi') ? 'active' : '' }}">
+                                <a href="{{ route('laporan.transaksi') }}">
                                     <span class="sub-item">Laporan Transaksi</span>
                                 </a>
                             </li>
-                            <li class="{{ request()->is('laporan/stok') ? 'active' : '' }}">
-                                <a href="{{ url('/laporan/stok') }}">
+                            <li class="{{ request()->routeIs('laporan.stok') ? 'active' : '' }}">
+                                <a href="{{ route('laporan.stok') }}">
                                     <span class="sub-item">Laporan Stok Alat</span>
                                 </a>
                             </li>
@@ -154,23 +135,11 @@
                 </li>
 
                 <!-- Log -->
-                <li class="nav-item {{ request()->is('log') || request()->is('log/*') ? 'active' : '' }}">
-                    <a data-bs-toggle="collapse" href="#log"
-                        class="{{ request()->is('log') || request()->is('log/*') ? '' : 'collapsed' }}">
+                <li class="nav-item {{ request()->routeIs('admin.log') ? 'active' : '' }}">
+                    <a href="{{ route('admin.log') }}">
                         <i class="fas fa-history"></i>
                         <p>Log Aktivitas</p>
-                        <span class="caret"></span>
                     </a>
-                    <div class="collapse {{ request()->is('log') || request()->is('log/*') ? 'show' : '' }}"
-                        id="log">
-                        <ul class="nav nav-collapse">
-                            <li class="{{ request()->is('log/lihat') ? 'active' : '' }}">
-                                <a href="{{ url('/log/lihat') }}">
-                                    <span class="sub-item">Lihat Log</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
             </ul>

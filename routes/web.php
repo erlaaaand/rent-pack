@@ -1,55 +1,40 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlatCampingController;
 
-Route::get('/admin', function () {
-    return view('admin/views/index');
-});
+// BACKEND
+Route::get('/alat-camping', [AlatCampingController::class, 'index'])->name('alat-camping.index');
+Route::post('/alat-camping', [AlatCampingController::class, 'create'])->name('alat-camping.create');
+Route::get('/alat-camping/{id}', [AlatCampingController::class, 'show'])->name('alat-camping.show');
 
-Route::get('/admin/profile', function () {
-    return view('admin/user/user-profile');
-});
+// INTERFACE ADMIN
+Route::prefix('admin')->group(function () {
+    Route::view('/', 'admin/views/index')->name('admin.dashboard');
+    Route::view('/profile', 'admin/user/user-profile')->name('admin.profile');
 
-// Tambah Alat
-Route::get('/alat/tambah', function () {
-    return view('admin/alat-camping/views/tambah-alat');
-});
+    // ALAT CAMPING
+    Route::prefix('alat-camping')->group(function () {
+        Route::view('/tambah', 'admin/alat-camping/views/tambah-alat')->name('alat-camping.create');
+        Route::view('/daftar', 'admin/alat-camping/views/daftar-alat')->name('alat-camping.list');
+        Route::view('/detail', 'admin/alat-camping/views/detail-alat')->name('alat-camping.detail');
+    });
 
-// daftar alat
-Route::get('/alat/daftar', function () {
-    return view('admin/alat-camping/views/daftar-alat');
-});
+    // PEMINJAMAN
+    Route::prefix('peminjaman')->group(function () {
+        Route::view('/riwayat', 'admin/peminjaman/views/riwayat-pinjaman')->name('peminjaman.riwayat');
+        Route::view('/belum-dikembalikan', 'admin/peminjaman/views/belum-dikembalikan')->name('peminjaman.belum-dikembalikan');
+    });
 
-// detail alat
-Route::get('/alat/detail', function () {
-    return view('admin/alat-camping/views/detail-alat');
-});
+    // PENGGUNA
+    Route::view('/pengguna/list', 'admin/customer/views/list-customer')->name('pengguna.list');
 
-// riwayat peminjaman
-Route::get('/peminjaman/riwayat', function () {
-    return view('admin/peminjaman/views/riwayat-pinjaman');
-});
+    // LAPORAN
+    Route::prefix('laporan')->group(function () {
+        Route::view('/transaksi', 'admin/laporan/views/laporan-transaksi')->name('laporan.transaksi');
+        Route::view('/stok', 'admin/laporan/views/list-stok-alat')->name('laporan.stok');
+    });
 
-Route::get('/peminjaman/belum-dikembalikan', function () {
-    return view('admin/peminjaman/views/belum-dikembalikan');
-});
-
-// list customer
-Route::get('/pengguna/list', function () {
-    return view('admin/customer/views/list-customer');
-});
-
-// LAPORAN TRANSAKSI
-Route::get('/laporan/transaksi', function () {
-    return view('admin/laporan/views/laporan-transaksi');
-});
-
-// LAPORAN STOK ALAT
-Route::get('/laporan/stok', function () {
-    return view('admin/laporan/views/list-stok-alat');
-});
-
-// log 
-Route::get('log/lihat', function () {
-    return view('admin/log/views/log');
+    // LOG
+    Route::view('/log', 'admin/log/views/log')->name('admin.log');
 });
